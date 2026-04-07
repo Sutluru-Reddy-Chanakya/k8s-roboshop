@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: catalogue
-        image: chanakyasrc/catalogue:1.0.0
+        image: joindevops/catalogue:1.0.0
         resources:
           requests:
             cpu: "100m"
