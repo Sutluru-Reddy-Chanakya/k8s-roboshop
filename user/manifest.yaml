@@ -87,3 +87,16 @@ spec:
   - protocol: TCP
     port: 8080 # servie port
     targetPort: 8080 # container port
+
+
+
+
+
+
+
+
+
+
+
+
+    
