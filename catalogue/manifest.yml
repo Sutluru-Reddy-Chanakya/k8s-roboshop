@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: catalogue
   namespace: roboshop
+  
   labels:
     project: roboshop
     tier: backend
@@ -10,6 +11,7 @@ metadata:
 data:
   MONGO: "true"
   MONGO_URL: "mongodb://mongodb:27017/catalogue"
+  
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,30 +41,7 @@ spec:
     spec:
       containers:
       - name: catalogue
-        image: chanakyasrc/catalogue:1.4.0
-        imagePullPolicy: Always # safe to pull everytime, there may be images with same version rebuilt and pushed
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
-          limits:
-            cpu: "100m"
-            memory: "128Mi"
-        readinessProbe:
-          # httpGet:
-          #   path: /health
-          #   port: 8080
-          tcpSocket:
-            port: 8080
-          failureThreshold: 2
-          periodSeconds: 10
-          initialDelaySeconds: 15
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          failureThreshold: 2
-          periodSeconds: 10
+        image: chanakyasrc/catalogue:1.0.0
         envFrom:
         - configMapRef:
             name: catalogue
@@ -84,11 +63,5 @@ spec:
     component: catalogue
   ports:
   - protocol: TCP
-    port: 8080 # servie port
-    targetPort: 8080 # container port
-
-
-
-
-
-    ################
+    port: 27017 # servie port
+    targetPort: 27017 # container port
