@@ -38,7 +38,7 @@ spec:
         project: roboshop
         tier: backend
         component: catalogue
-    spec:
+        spec:
       containers:
       - name: catalogue
         image: chanakyasrc/catalogue:1.4.0
@@ -50,9 +50,6 @@ spec:
             cpu: "100m"
             memory: "128Mi"
         readinessProbe:
-          # httpGet:
-          #  path: /health
-          # port: 808
           tcpSocket:
             port: 8080
           failureThreshold: 2
@@ -62,9 +59,8 @@ spec:
           httpGet:
             path: /health
             port: 8080
-            failureThreshold: 2
-            periodSeconds: 10
-            
+          failureThreshold: 2      # moved out
+          periodSeconds: 10        # moved out
       envFrom:
         - configMapRef:
             name: catalogue
