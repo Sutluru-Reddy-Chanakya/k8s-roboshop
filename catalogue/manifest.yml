@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
       - name: catalogue
-        image: chanakyasrc/catalogue:1.0.0
+        image: chanakyasrc/catalogue:1.4.0
         envFrom:
         - configMapRef:
             name: catalogue
