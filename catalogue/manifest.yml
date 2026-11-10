@@ -1,24 +1,8 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: catalogue
-  namespace: roboshop
-  
-  labels:
-    project: roboshop
-    tier: backend
-    component: catalogue
-data:
-  MONGO: "true"
-  MONGO_URL: "mongodb://mongodb:27017/catalogue"
-  
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catalogue
   namespace: roboshop
-  # these labels are replicaset labels
   labels:
     project: roboshop
     tier: backend
@@ -26,20 +10,18 @@ metadata:
 spec:
   replicas: 1
   selector:
-    # using these labels replica set selects the pod
     matchLabels:
       project: roboshop
       tier: backend
       component: catalogue
-  # This is pod definition, pod is subset of replicaset
   template:
     metadata:
       labels:
         project: roboshop
         tier: backend
         component: catalogue
-        spec:
-      containers:
+    spec:                              # ← must be 4 spaces, sibling of metadata
+      containers:                      # ← 6 spaces
       - name: catalogue
         image: chanakyasrc/catalogue:1.4.0
         resources:
@@ -59,11 +41,11 @@ spec:
           httpGet:
             path: /health
             port: 8080
-          failureThreshold: 2      # moved out
-          periodSeconds: 10        # moved out
-      envFrom:
-        - configMapRef:
-            name: catalogue
+          failureThreshold: 2          # ← sibling of httpGet (not inside it)
+          periodSeconds: 10            # ← sibling of httpGet
+      envFrom:                         # ← 6 spaces, sibling of containers
+      - configMapRef:
+          name: catalogue
 ---
 apiVersion: v1
 kind: Service
