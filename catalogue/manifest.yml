@@ -20,8 +20,8 @@ spec:
         project: roboshop
         tier: backend
         component: catalogue
-    spec:                              # ← must be 4 spaces, sibling of metadata
-      containers:                      # ← 6 spaces
+    spec:
+      containers:
       - name: catalogue
         image: chanakyasrc/catalogue:1.4.0
         resources:
@@ -41,11 +41,11 @@ spec:
           httpGet:
             path: /health
             port: 8080
-          failureThreshold: 2          # ← sibling of httpGet (not inside it)
-          periodSeconds: 10            # ← sibling of httpGet
-      envFrom:                         # ← 6 spaces, sibling of containers
-      - configMapRef:
-          name: catalogue
+          failureThreshold: 2
+          periodSeconds: 10
+        envFrom:
+        - configMapRef:
+            name: catalogue
 ---
 apiVersion: v1
 kind: Service
@@ -58,11 +58,10 @@ metadata:
     component: catalogue
 spec:
   selector:
-    # labels are used as selectors
     project: roboshop
     tier: backend
     component: catalogue
   ports:
   - protocol: TCP
-    port: 27017 # servie port
-    targetPort: 27017 # container port
+    port: 8080
+    targetPort: 8080
